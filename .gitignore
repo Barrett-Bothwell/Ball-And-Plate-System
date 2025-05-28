@@ -48,3 +48,4 @@ coverage/
 
 # Explicitly include the simulation file
 !Ball_Plate_Simulation.py
+

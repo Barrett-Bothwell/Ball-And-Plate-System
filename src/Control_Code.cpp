@@ -34,8 +34,10 @@ float x_offset = -2.8;
 float y_offset = -2.8;
 float theta_x = 0;
 float theta_y = 0;
-float x_setpoint = 80; 
-float y_setpoint = -120;  
+float x_setpoint = 100; 
+float y_setpoint = -150;
+bool circle = false; // Circle mode toggle
+float radius = 25;
 
 //TouchScreen Setup
 TouchScreen ts = TouchScreen(XP, YP, XM, YM, 300);
@@ -94,15 +96,16 @@ BLA::Matrix<4, 4> K = {
 }; // Observer gain matrix (tune this based on your system)
 
 BLA :: Matrix<2,4> G = {
-  0.3568 / 410, 0.4959 / 410, 0, 0,
-  0, 0, 0.3568 / 410 * 2.63/3.75, 0.4959 / 410 * 2.63/3.75
-}; // Control gain matrix (tune this based on your system)
+  0.3568 / 500, 0.4959 / 850, 0, 0, 
+  0, 0, 0.3568 / 500 * 2.63/3.75, 0.4959 / 550 * 2.63/3.75
+}; // Control gain matrix (worked pretty good with 420 x vel was 640)
 
 // State and observer variables
 BLA::Matrix<4> x_hat = {0, 0, 0, 0}; // Initial estimated state
 BLA::Matrix<4> y = {0, 0, 0, 0};           // Measured output
 BLA::Matrix<2> u = {0, 0};           // Control input
 BLA::Matrix<4> error = {0, 0, 0, 0}; // Error between estimated and actual state
+BLA::Matrix<4> setpoint = {x_setpoint, 0, y_setpoint, 0}; // Example: stationary at origin
 
 // Compute discrete-time matrices A_d and B_d
 BLA::Matrix<4, 4> A_d = {
@@ -131,16 +134,22 @@ void computeDiscreteMatrices() {
 void setup() {
   //6302 ViewSetup
   cm.addPlot(&x_meas, "X Position", -100, 100);
-  cm.addPlot(&phi_x, "phi_x", 33, 57);
+  // optional to plot phi_x on 6302 view
+  //cm.addPlot(&phi_x, "phi_x", 33, 57);
   cm.addPlot(&y_meas, "Y Position", -100, 100);
-  cm.addPlot(&phi_y, "phi_y", 33, 57);
+  //option to plot phi_y on 6302 view
+  //cm.addPlot(&phi_y, "phi_y", 33, 57);
+  //Optional to plot x_dot and y_dot on 6302 view 
+  //cm.addPlot(&x_dot, "X Velocity", -150, 150);
+  //cm.addPlot(&y_dot, "Y Velocity", -150, 150);
   
 
   // Add sliders for setpoint adjustment
   cm.addSlider(&x_setpoint, "X Setpoint", 0, 165, 50, 1);
-  cm.addSlider(&y_setpoint, "Y Setpoint", -150, -90, -120, 1);
+  cm.addSlider(&y_setpoint, "Y Setpoint", -180, -100, -120, 1);
   cm.addSlider(&x_offset, "X Offset", -5, 5, -3.75, 1);
   cm.addSlider(&y_offset, "Y Offset", -5, 5, -2.5, 1);
+  cm.addToggle(&circle, "Circle");
 
   //Servo Setup Code
     servox.attach(servoxPin, minUs, maxUs);
@@ -179,8 +188,8 @@ void loop() {
    }
 
   // 2. Estimate velocity
-  float x_dot = (x_meas - prev_x) / T;
-  float y_dot = (y_meas - prev_y) / T;
+  x_dot = (x_meas - prev_x) / T;
+  y_dot = (y_meas - prev_y) / T;
   prev_x = x_meas;
   prev_y = y_meas;
 
@@ -188,7 +197,14 @@ void loop() {
   BLA::Matrix<4> y = {x_meas, x_dot, y_meas, y_dot};
 
   // 4. Define the setpoint (desired state)
-  BLA::Matrix<4> setpoint = {x_setpoint, 0, y_setpoint, 0}; // Example: stationary at origin
+  if (circle) {
+    // Circle mode: Setpoint follows a circular path
+    float time = currentTime / 1000000.0; // Convert to seconds
+    setpoint = {radius*cos(time)+x_setpoint,-radius*sin(time) ,radius*sin(time)+y_setpoint ,radius*cos(time) };
+
+  } else {
+    setpoint = {x_setpoint, 0, y_setpoint, 0};
+  }
 
   // Update Observer State
   x_hat = A_d * x_hat + B_d * u + K * (y - C * x_hat);

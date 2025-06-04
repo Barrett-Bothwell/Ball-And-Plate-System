@@ -26,7 +26,7 @@ A dynamic balancing system that uses an **ESP32-C3 Super Mini**, **MG995 servos*
 
 ## Wiring Setup
 
-![alt text](<5v Power Supply.jpg>)
+![Wiring Diagram](./5v_Power_Supply.jpg)
 
 | ESP32-C3 Pin | Connection                       |
 | ------------ | -------------------------------- |

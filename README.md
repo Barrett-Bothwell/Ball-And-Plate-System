@@ -2,7 +2,7 @@
 
 A dynamic balancing system that uses an **ESP32-C3 Super Mini**, **MG995 servos**, and a **resistive touchscreen** to control the position of a ball on a plate. The system implements **modern control theory** for real-time position stabilization and uses **6302view** for visualization and debugging.
 
-## 🛠️ Features
+## Features
 
 - Real-time ball position control using state-space or observer-based feedback
 - Input via resistive touchscreen for ball position sensing
@@ -10,7 +10,7 @@ A dynamic balancing system that uses an **ESP32-C3 Super Mini**, **MG995 servos*
 - Visualization with **6302view**
 - Built on the ESP32-C3 Super Mini platform
 
-## 📦 Components Used
+## Components Used
 
 | Component              | Description                                |
 |------------------------|--------------------------------------------|
@@ -24,20 +24,35 @@ A dynamic balancing system that uses an **ESP32-C3 Super Mini**, **MG995 servos*
 | 6302view               | PC-based visualization & tuning tool       |
 | 5v Power Supply           | Stable 5V source for servos and ESP32      |
 
-## 📐 Control Approach
+## Wiring Setup
+
+![alt text](<5v Power Supply.jpg>)
+
+| ESP32-C3 Pin | Connection                       |
+| ------------ | -------------------------------- |
+| 5V           | Servo power supply, can use external power supply |
+| GND          | Common ground for all components |
+| Pin 5       | Servo X PWM signal               |
+| Pin 4        | Servo Y PWM signal               |
+| Pin 1      | Touchscreen X+ (analog read)     |
+| Pin 3        | Touchscreen X- (output control)  |
+| Pin 4       | Touchscreen Y+ (output control)  |
+| Pin 2        | Touchscreen Y- (analog read)     |
+
+
+## Control Approach
 
 This project uses a **state-space feedback controller** designed using modern control theory. Key features:
 - Real-time state estimation
 - Robust control tuning using matrix-based gain design
 - Manual gain tuning
 
-## 🖥️ 6302view Integration
+## 6302view Integration
 
 - **Purpose**: Enables real-time monitoring and set point placement of system over serial communication.
 - **Setup**:
   - Connect ESP32-C3 to PC via USB
-  - Configure serial output from your code (e.g., using `Serial.println()` or a binary protocol)
-  - Run `6302view` on PC and link to the correct COM port
+  - Run `6302view` on PC and link to ESP32 via serial or wifi
   - More details for running 6302 view can be seen at https://github.com/almonds0166/6302view?tab=readme-ov-file
 - **Visualized Parameters**:
   - Current ball position (X, Y)

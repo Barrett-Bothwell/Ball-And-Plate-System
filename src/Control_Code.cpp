@@ -6,7 +6,7 @@
 #include <ESP32Servo.h>
 
 //Touchscreen Pin Definitions
-#define YP 2  // must be an analog pin, use "An" notation! CHANGE TO CORRECT PINS
+#define YP 2  // must be an analog pin, use "An" notation!
 #define XM 1  // must be an analog pin, use "An" notation!
 #define YM 0   // can be a digital pin
 #define XP 3   // can be a digital pin
@@ -45,10 +45,10 @@ TouchScreen ts = TouchScreen(XP, YP, XM, YM, 300);
 unsigned long lastTouchTime = 0; // Timestamp of the last valid touchscreen press
 const unsigned long TOUCH_TIMEOUT = 500000; // Timeout period in microseconds (0.5 seconds)
 
-#define TS_MINX -3072  // Replace with your calibrated minimum X value
-#define TS_MAXX 420  // Replace with your calibrated maximum X value
-#define TS_MINY -2500  // Replace with your calibrated minimum Y value
-#define TS_MAXY 350  // Replace with your calibrated maximum Y value
+#define TS_MINX -3072  // calibrated minimum X value
+#define TS_MAXX 420  // calibrated maximum X value
+#define TS_MINY -2500  // calibrated minimum Y value
+#define TS_MAXY 350  // calibrated maximum Y value
 
 //Servo Setup
 Servo servox;
@@ -98,7 +98,7 @@ BLA::Matrix<4, 4> K = {
 BLA :: Matrix<2,4> G = {
   0.3568 / 500, 0.4959 / 850, 0, 0, 
   0, 0, 0.3568 / 500 * 2.63/3.75, 0.4959 / 550 * 2.63/3.75
-}; // Control gain matrix (worked pretty good with 420 x vel was 640)
+}; // Control gain matrix (If all denominators are 420 will be more responsive)
 
 // State and observer variables
 BLA::Matrix<4> x_hat = {0, 0, 0, 0}; // Initial estimated state
@@ -107,7 +107,7 @@ BLA::Matrix<2> u = {0, 0};           // Control input
 BLA::Matrix<4> error = {0, 0, 0, 0}; // Error between estimated and actual state
 BLA::Matrix<4> setpoint = {x_setpoint, 0, y_setpoint, 0}; // Example: stationary at origin
 
-// Compute discrete-time matrices A_d and B_d
+// Discrete-time matrices A_d and B_d Found using Simulation.py
 BLA::Matrix<4, 4> A_d = {
     1, 0.02, 0, 0,
     0, 1, 0, 0,
@@ -121,15 +121,6 @@ BLA::Matrix<4, 2> B_d = {
     0, 0.00140143,
     0, 0.14014286
 };
-
-/*
-void computeDiscreteMatrices() {
-    for (int i = 1; i <= 10; i++) {
-        term = (term * (A * T)) / i; // Compute the next term: (A * T)^i / i!
-        A_d += term; // Add the term to A_d
-    }
-    B_d = (A_d - identity) * (BLA::Invert(A) * B);
-}*/
 
 void setup() {
   //6302 ViewSetup
@@ -163,7 +154,6 @@ void setup() {
 
   cm.connect(&Serial, 115200);
 }
-
 void loop() {
   static unsigned long lastTime = 0; // Store the timestamp of the previous loop iteration
   unsigned long currentTime = micros(); // Get the current time in microseconds
@@ -217,14 +207,14 @@ void loop() {
   theta_x = u(0) * 180 / PI; // Convert u(0) to degrees
   theta_y = u(1) * 180 / PI; // Convert u(1) to degrees
 
-  phi_x = (theta_x + 45); // Convert to servo angle *3.75
-  phi_y = (theta_y + 45); // Convert to servo angle *2.63
+  phi_x = (theta_x + 45); // Convert to servo angle 
+  phi_y = (theta_y + 45); // Convert to servo angle
 
-  phi_x = constrain(phi_x, 38, 57) - x_offset; //38 - 57
-  phi_y = constrain(phi_y, 34, 51) - y_offset; // 34 - 51
+  phi_x = constrain(phi_x, 38, 57) - x_offset; // Constrain phi_x to ensure system doesnt break
+  phi_y = constrain(phi_y, 34, 51) - y_offset; // the offset values are used to adjust for uneven tables
 
   // Send phi_x and phi_y to servos
-  servox.write(phi_x); // 45 degrees isapproximately zero for x
+  servox.write(phi_x); // 45 degrees is approximately zero for x
   servoy.write(phi_y); // 45 degrees is approximately zero for y
 
   cm.step();

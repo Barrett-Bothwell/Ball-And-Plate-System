@@ -34,10 +34,10 @@ A dynamic balancing system that uses an **ESP32-C3 Super Mini**, **MG995 servos*
 | GND          | Common ground for all components |
 | Pin 5       | Servo X PWM signal               |
 | Pin 4        | Servo Y PWM signal               |
-| Pin 1      | Touchscreen X+ (analog read)     |
-| Pin 3        | Touchscreen X- (output control)  |
-| Pin 4       | Touchscreen Y+ (output control)  |
-| Pin 2        | Touchscreen Y- (analog read)     |
+| Pin 0      | Touchscreen X+ (analog read)     |
+| Pin 2        | Touchscreen X- (output control)  |
+| Pin 3       | Touchscreen Y+ (output control)  |
+| Pin 1        | Touchscreen Y- (analog read)     |
 
 
 ## Control Approach

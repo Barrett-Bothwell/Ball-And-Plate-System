@@ -1,5 +1,7 @@
 # Ball and Plate Control System
 
+[![Watch the demo video](https://img.youtube.com/vi/V8rTU_FPlsE/0.jpg)](https://www.youtube.com/watch?v=V8rTU_FPlsE)
+
 A dynamic balancing system that uses an **ESP32-C3 Super Mini**, **MG995 servos**, and a **resistive touchscreen** to control the position of a ball on a plate. The system implements **modern control theory** for real-time position stabilization and uses **6302view** for visualization and debugging.
 
 ## Features

@@ -96,9 +96,10 @@ BLA::Matrix<4, 4> K = {
 }; // Observer gain matrix (tune this based on your system)
 
 BLA :: Matrix<2,4> G = {
-  0.3568 / 500, 0.4959 / 850, 0, 0, 
+  0.3568 / 500, 0.4959 / 600, 0, 0, 
   0, 0, 0.3568 / 500 * 2.63/3.75, 0.4959 / 550 * 2.63/3.75
-}; // Control gain matrix (If all denominators are 420 will be more responsive)
+}; // Control gain matrix (500 xpos, 850 xvel, 500 ypos, 550 yvel) 
+//these denominators will be less sensitive and work better for the circle mode
 
 // State and observer variables
 BLA::Matrix<4> x_hat = {0, 0, 0, 0}; // Initial estimated state

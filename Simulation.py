@@ -45,7 +45,7 @@ desired_eigenvalues = [0.92, 0.89, 0.92, 0.89]  # Discrete-time poles for contro
 G = ctrl.place(A_d, B_d, desired_eigenvalues)
 
 # Initial state
-x0 = np.array([2, 0, 1, 0.0])
+x0 = np.array([1, 0, 0.5, 0.0])
 x_hat0 = np.array([0, 0, 0, 0])  # Initial state estimate
 
 # Time vector

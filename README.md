@@ -9,6 +9,7 @@ A dynamic balancing system that uses an **ESP32-C3 Super Mini**, **MG995 servos*
 ## Features
 
 - Real-time ball position control using state-space or observer-based feedback
+- Circular pattern sert point option
 - Input via resistive touchscreen for ball position sensing
 - Output actuation using MG995 servos
 - Visualization with **6302view**
@@ -29,6 +30,8 @@ A dynamic balancing system that uses an **ESP32-C3 Super Mini**, **MG995 servos*
 | 5v Power Supply           | Stable 5V source for servos and ESP32      |
 
 ## Wiring Setup
+
+![Ball and Plate Schematic](./BallPlate_Schematic.jpeg)
 
 ![Wiring Diagram](./5v_Power_Supply.jpg)
 
@@ -58,6 +61,8 @@ This project uses a **state-space feedback controller** designed using modern co
   - Connect ESP32-C3 to PC via USB
   - Run `6302view` on PC and link to ESP32 via serial or wifi
   - More details for running 6302 view can be seen at https://github.com/almonds0166/6302view?tab=readme-ov-file
+  - Once 6302 view is running use the x offset and y offset toggles to level the plate if your table is uneven
+  - After setting offset values modify the setup to desired value
 - **Visualized Parameters**:
   - Current ball position (X, Y)
   - Currently commented out servo command plots

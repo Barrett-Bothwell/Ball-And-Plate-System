@@ -47,13 +47,6 @@ A dynamic balancing system that uses an **ESP32-C3 Super Mini**, **MG995 servos*
 | Pin 1        | Touchscreen Y- (analog read)     |
 
 
-## Control Approach
-
-This project uses a **state-space feedback controller** designed using modern control theory. Key features:
-- Real-time state estimation
-- Robust control tuning using matrix-based gain design
-- Manual gain tuning
-
 ## Setup Instructions
 
 Follow these steps to set up the Ball and Plate Control System:
@@ -89,6 +82,65 @@ Follow these steps to set up the Ball and Plate Control System:
   - Target/reference position slider
   - Axis Offset sliders to account for uneven surfaces
   - Circle toggle to target a circular pattern for the ball
+
+## Control Theory
+
+This project uses a **state-space feedback controller** designed using modern control theory. The first step in finding our state space model was deriving the equation using Newton's Laws.
+
+**Deriving the Equations of Motion Using Newton's Laws**:
+
+The first step in designing the control system is to derive the equations of motion for the Ball and Plate system. This is done using **Newton's Second Law**:
+
+\
+F = ma and M = I\alpha
+\
+
+#### Assumptions:
+- The ball rolls without slipping on the plate.
+- The plate's motion is limited to small angular displacements (linearization assumption).
+- Constant gravitational force acts on the ball.
+- No additional rotation on ball.
+- No unwanted movement in plate.
+
+#### Steps:
+1. **Free Body Diagram**:
+   - Consider the forces acting on the ball:
+     - Gravitational force \(mg\) acting downward.
+     - Normal force \(N\) from the plate.
+     - Frictional force \(F_f\) preventing slipping.
+
+2. **Equations of Motion**:
+   - For the ball in the \(x\)-direction:
+     \
+     F_f - w sin(\theta) = -ma
+     \
+   - For the rotation of the ball:
+   \
+    F_f R = I \alpha
+   \
+
+3. **Combine Equations**:
+   - Substitute the torque equation into the force equations to eliminate \(F_f\).
+   \
+    R(w sin(\theta) - ma) = I \alpha
+   \
+
+4. **Final Linearized Equations**:
+   - In the \(x\)-direction:
+     \[
+     \ddot{x} = \frac{5}{7} g \theta_x
+     \]
+   - In the \(y\)-direction:
+     \[
+     \ddot{y} = \frac{5}{7} g \theta_y
+     \]
+
+These equations describe the motion of the ball on the plate and form the basis for deriving the state-space model.
+
+---
+
+In the next step, these equations will be used to construct the **state-space representation** of the system.
+
 
 ## Potential Improvements
 

@@ -7,3 +7,8 @@
 # Ignore macOS system files
 .DS_Store
 .vscode
+
+/test/
+docs.md
+gui.png
+backup_pico_platformio.ini

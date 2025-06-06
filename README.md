@@ -54,15 +54,35 @@ This project uses a **state-space feedback controller** designed using modern co
 - Robust control tuning using matrix-based gain design
 - Manual gain tuning
 
+## Setup Instructions
+
+Follow these steps to set up the Ball and Plate Control System:
+
+1. **Hardware Assembly**:
+   - Start by 3D printing the top tray and bottom base
+   - Once printed mount the motors by screwing them into the two posts
+   - Connect the top tray and bottom base together using the universal joint
+   - Finally use the metal clevises and linkage rods to connect the motors to teh top tray
+   - Wire the components as per the wiring diagram provided in the **Wiring Setup** section.
+
+2. **Software Setup**:
+   - Install the required development environment for the ESP32-C3 (e.g., [PlatformIO](https://platformio.org/) or Arduino IDE).
+   - Open the project in your development environment and upload the firmware to the ESP32-C3.
+
+3. **6302view Setup**:
+   - Download and install **6302view** from its [GitHub repository](https://github.com/almonds0166/6302view).
+   - Connect the ESP32-C3 to your PC via USB or Wi-Fi.
+   - Run **6302view** and configure the serial or Wi-Fi connection to the ESP32-C3.
+   - Use the offset sliders in **6302view** to level the plate if necessary.
+
+5. **Testing**:
+   - Power on the system and ensure all components are functioning correctly.
+   - Use **6302view** to monitor the ball position and adjust the control parameters as needed.
+
 ## 6302view Integration
 
 - **Purpose**: Enables real-time monitoring and set point placement of system over serial communication.
-- **Setup**:
-  - Connect ESP32-C3 to PC via USB
-  - Run `6302view` on PC and link to ESP32 via serial or wifi
-  - More details for running 6302 view can be seen at https://github.com/almonds0166/6302view?tab=readme-ov-file
-  - Once 6302 view is running use the x offset and y offset toggles to level the plate if your table is uneven
-  - After setting offset values modify the setup to desired value
+
 - **Visualized Parameters**:
   - Current ball position (X, Y)
   - Currently commented out servo command plots

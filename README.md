@@ -62,7 +62,7 @@ Follow these steps to set up the Ball and Plate Control System:
    - Start by 3D printing the top tray and bottom base
    - Once printed mount the motors by screwing them into the two posts
    - Connect the top tray and bottom base together using the universal joint
-   - Finally use the metal clevises and linkage rods to connect the motors to teh top tray
+   - Finally use the metal clevises and linkage rods to connect the motors to the top tray
    - Wire the components as per the wiring diagram provided in the **Wiring Setup** section.
 
 2. **Software Setup**:

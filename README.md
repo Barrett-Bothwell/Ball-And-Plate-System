@@ -89,11 +89,9 @@ This project uses a **state-space feedback controller** designed using modern co
 
 **Deriving the Equations of Motion Using Newton's Laws**:
 
-The first step in designing the control system is to derive the equations of motion for the Ball and Plate system. This is done using **Newton's Second Law**:
-
+The first step in designing the control system is to derive the equations of motion for the Ball and Plate system. This is done using Newton's Second Law:
 \
 F = ma and M = Iα
-\
 
 #### Assumptions:
 - The ball rolls without slipping on the plate.
@@ -110,37 +108,75 @@ F = ma and M = Iα
      - Frictional force \(F<sub>f</sub>\) preventing slipping.
 
 2. **Equations of Motion**:
-   - For the ball in the \(x\)-direction:
+   - For the ball in the x-direction:
      \
      F<sub>f</sub> - w sin(θ) = -ma
-     \
+     
    - For the rotation of the ball:
    \
-    F<sub>f</sub>R = Iα
-   \
+    F<sub>f</sub>R = Iα  
 
 3. **Combine Equations**:
    - Substitute the torque equation into the force equations to eliminate \(F_f\).
    \
     R(w sin(θ) - ma) = Iα
-   \
 
 4. **Simplify**:
    - By plugging in the moment of inertia for a solid sphere:
    \
     2/5mR^2
-   \
+   
    - With additional algebraic simplification and a small angle approximation of sin we get:
    \
    a = 5/7gθ
-   \
 
 This equation describes the behavior of the ball for both the respective x and y accelerations in terms of the plate angle θ.
 
 ---
 
-In the next step, these equations will be used to construct the **state-space representation** of the system.
+In the next step, these equations will be used to construct the state-space representation of the system.
 
+State-Space Representation
+The state-space representation of a system is given by: [ \dot{x} = Ax + Bu ] [ y = Cx + Du ]
+
+Where:
+
+( x ) is the state vector (e.g., ball position and velocity).
+( u ) is the input vector (e.g., plate angles).
+( y ) is the output vector (e.g., ball position).
+( A, B, C, D ) are the system matrices.
+Step 1: Define the States
+For the Ball and Plate system, the states can be defined as:
+
+( x_1 = \text{Ball position in the x-direction} )
+( x_2 = \text{Ball velocity in the x-direction} )
+( x_3 = \text{Ball position in the y-direction} )
+( x_4 = \text{Ball velocity in the y-direction} )
+Thus, the state vector is: [ x = \begin{bmatrix} x_1 \ x_2 \ x_3 \ x_4 \end{bmatrix} ]
+
+Step 2: Inputs and Outputs
+Inputs (( u )): Plate angles in the x and y directions: [ u = \begin{bmatrix} \theta_x \ \theta_y \end{bmatrix} ]
+Outputs (( y )): Ball positions in the x and y directions: [ y = \begin{bmatrix} x_1 \ x_3 \end{bmatrix} ]
+Step 3: Derive the State Equations
+Using the linearized equations of motion: [ a_x = \frac{5}{7} g \theta_x, \quad a_y = \frac{5}{7} g \theta_y ] We can write the second-order equations for the ball’s motion: [ \ddot{x}_1 = \frac{5}{7} g \theta_x, \quad \ddot{x}_3 = \frac{5}{7} g \theta_y ]
+
+Convert these into first-order differential equations: [ \dot{x}_1 = x_2, \quad \dot{x}_2 = \frac{5}{7} g \theta_x ] [ \dot{x}_3 = x_4, \quad \dot{x}_4 = \frac{5}{7} g \theta_y ]
+
+Step 4: Write in Matrix Form
+Combine the equations into matrix form: [ \dot{x} = \begin{bmatrix} 0 & 1 & 0 & 0 \ 0 & 0 & 0 & 0 \ 0 & 0 & 0 & 1 \ 0 & 0 & 0 & 0 \end{bmatrix} x + \begin{bmatrix} 0 & 0 \ \frac{5}{7} g & 0 \ 0 & 0 \ 0 & \frac{5}{7} g \end{bmatrix} u ]
+
+[ y = \begin{bmatrix} 1 & 0 & 0 & 0 \ 0 & 0 & 1 & 0 \end{bmatrix} x + \begin{bmatrix} 0 & 0 \ 0 & 0 \end{bmatrix} u ]
+
+Here:
+
+( A ) is the system matrix.
+( B ) is the input matrix.
+( C ) is the output matrix.
+( D ) is the feedthrough matrix.
+Step 5: Final State-Space Model
+The state-space model is: [ \dot{x} = Ax + Bu ] [ y = Cx + Du ]
+
+Where: [ A = \begin{bmatrix} 0 & 1 & 0 & 0 \ 0 & 0 & 0 & 0 \ 0 & 0 & 0 & 1 \ 0 & 0 & 0 & 0 \end{bmatrix}, \quad B = \begin{bmatrix} 0 & 0 \ \frac{5}{7} g & 0 \ 0 & 0 \ 0 & \frac{5}{7} g \end{bmatrix} ] [ C = \begin{bmatrix} 1 & 0 & 0 & 0 \ 0 & 0 & 1 & 0 \end{bmatrix}, \quad D = \begin{bmatrix} 0 & 0 \ 0 & 0 \end{bmatrix} ]
 
 ## Potential Improvements
 

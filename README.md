@@ -154,15 +154,17 @@ Where:
 
 1. Define the States
 For the Ball and Plate system, the states can be defined as:
-- x = Ball position in the x-direction \
+- x = Ball position in the x-direction
 - $\dot{x}$  = Ball velocity in the x-direction
 - y = Ball position in the y-direction
 - $\dot{y}$ = Ball velocity in the y-direction
 
 Thus, the **state vector \(x\)** is:
-\
-\begin{bmatrix} x \\ \dot{x} \\ y \\ \dot{y} \end{bmatrix}
-\
+
+[x]
+[$\dot{x}$]
+[y]
+[$\dot{y}$]
 
 2. Inputs and Outputs
 - **Inputs \( u \)**: Plate angles in the x and y directions:

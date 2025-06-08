@@ -162,9 +162,9 @@ For the Ball and Plate system, the states can be defined as:
 Thus, the **state vector \(x\)** is:
 
 [x]\
-[\dot{x}]\
+[$\dot{x}$]\
 [y]\
-[\dot{y}]
+[$\dot{y}$]
 
 2. Inputs and Outputs
 - **Inputs \( u \)**: Plate angles in the x and y directions:
@@ -222,44 +222,43 @@ Here:
 
 5. Final State-Space Model
 The state-space model is:
-\[
+\
 $\dot{x}$ = Ax + Bu
-\]
-\[
+\
 y = Cx + Du
-\]
 
 Where:
-A = [ 0  1  0  0 ]
-    [ 0  0  0  0 ]
-    [ 0  0  0  1 ]
-    [ 0  0  0  0 ]
 
-B = [   0       0   ]
-    [ 5/7*g     0   ]
-    [   0       0   ]
-    [   0    5/7*g  ]
+A = [ 0  1  0  0 ]\
+    [ 0  0  0  0 ]\
+    [ 0  0  0  1 ]\
+    [ 0  0  0  0 ]\
 
-C = [ 1  0  0  0 ]
-    [ 0  1  0  0 ]
-    [ 0  0  1  0 ]
-    [ 0  0  0  1 ]
+B = [   0       0   ]\
+    [ 5/7*g     0   ]\
+    [   0       0   ]\
+    [   0    5/7*g  ]\
 
-D = [ 0  0  0  0 ]
-    [ 0  0  0  0 ]
-    [ 0  0  0  0 ]
+C = [ 1  0  0  0 ]\
+    [ 0  1  0  0 ]\
+    [ 0  0  1  0 ]\
+    [ 0  0  0  1 ]\
+
+D = [ 0  0  0  0 ]\
+    [ 0  0  0  0 ]\
+    [ 0  0  0  0 ]\
     [ 0  0  0  0 ]
 
 Now that our A, B, C, and D matrices are defined we must find the discrete versions of each. For our application the discrete version of the C and D matrix are the same and the A and B matrix are:
 
-A = [ 1    0.02  0    0    ]
-    [ 0    1     0    0    ]
-    [ 0    0     1    0.02 ]
+A = [ 1    0.02  0    0    ]\
+    [ 0    1     0    0    ]\
+    [ 0    0     1    0.02 ]\
     [ 0    0     0    1    ]
 
-B = [   0       0   ]
-    [ 5/7*g     0   ]
-    [   0       0   ]
+B = [   0       0   ]\
+    [ 5/7*g     0   ]\
+    [   0       0   ]\
     [   0    5/7*g  ]
 
 ## Potential Improvements

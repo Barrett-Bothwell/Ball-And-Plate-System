@@ -161,10 +161,10 @@ For the Ball and Plate system, the states can be defined as:
 
 Thus, the **state vector \(x\)** is:
 
-[x]
-[$\dot{x}$]
-[y]
-[$\dot{y}$]
+[x]\
+[\dot{x}]\
+[y]\
+[\dot{y}]
 
 2. Inputs and Outputs
 - **Inputs \( u \)**: Plate angles in the x and y directions:

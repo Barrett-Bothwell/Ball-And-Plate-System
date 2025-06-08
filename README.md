@@ -25,7 +25,7 @@ A dynamic balancing system that uses an **ESP32-C3 Super Mini**, **MG995 servos*
 |------------------------|--------------------------------------------|
 | ESP32-C3 Super Mini    | Microcontroller for control and I/O        |
 | MG995 Servos (x2)      | Control pitch and roll of the plate        |
-| M2x65mm Linkage Rod | Linkage Rod used to connect plate to servo motors |
+| M2x65mm Linkage Rod | Linkage Rod used to connect the plate to the servo motors |
 | M2 Metal Clevis    | Clevis used to connect the rod to the servo and top plate |
 | Universal Joint Coupler | 10mm inner diameter universal joint |
 | 7/8" Stainless Steel Ball | Ideal ball size for system and plate |
@@ -83,7 +83,7 @@ Follow these steps to set up the Ball and Plate Control System:
 
 ## 6302view Integration
 
-- **Purpose**: Enables real-time monitoring and set point placement of system over serial communication.
+- **Purpose**: Enables real-time monitoring and set point placement of the system over serial communication.
 
 - **Visualized Parameters**:
   - Current ball position (X, Y)
@@ -108,8 +108,8 @@ F = ma and M = Iα
 - The ball rolls without slipping on the plate.
 - The plate's motion is limited to small angular displacements (linearization assumption).
 - Constant gravitational force acts on the ball.
-- No additional rotation on ball.
-- No unwanted movement in plate.
+- No additional rotation on the ball.
+- No unwanted movement in the plate.
 
 #### Steps:
 1. **Free Body Diagram**:
@@ -257,7 +257,7 @@ Where x̂ is the approximated values for position and velocity in both the x and
 
 **Feedback Control**
 
-Now that we have our statespace model and gain matrices we can apply feedback to our system. We will accomplish this by finding the difference between our setpoint positions and velocities and the observer state. We will then multiply this difference by our G matrix to solve for u.
+Now that we have our state-space model and gain matrices we can apply feedback to our system. We will accomplish this by finding the difference between our setpoint positions and velocities and the observer state. We will then multiply this difference by our G matrix to solve for u.
 
 ---
 
@@ -265,14 +265,14 @@ Now that we have our statespace model and gain matrices we can apply feedback to
 
 - **Hardware Improvements**
   - The 3D printed structure had some minor warping on the top piece
-    - Modifications to CAD model could be made to reduce this warping
+    - Modifications to the CAD model could be made to reduce this warping
     - Printing procedure could change to modify this as well
-  - Cheap servos were used which although had enough power and range of motion the clarity is low
-    - Higher quality, more accurate servos could be used to ensure desired angle is output
+  - Cheap servos were used which although they had enough power and range of motion the clarity is low
+    - Higher quality, more accurate servos could be used to ensure the desired angle is output
     - 3 or more servos could have been used in a different arrangement to produce more accurate plate angle outputs
 
 - **Software Improvements**
-  - Both G and K matrices can be fine tuned to ensure optimal convergence
+  - Both G and K matrices can be fine-tuned to ensure optimal convergence
   - Additional plots can be added using 6302 view
     - Currently code for angles is commented out
     - Observer state plots could be added

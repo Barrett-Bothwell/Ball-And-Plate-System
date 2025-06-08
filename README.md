@@ -191,43 +191,43 @@ y = Cx + Du
 
 Where:
 
-A = 
-    [ 0  1  0  0 ]\
-    [ 0  0  0  0 ]\
-    [ 0  0  0  1 ]\
-    [ 0  0  0  0 ]
+A = \
+    [ 0 ,  1 ,  0 ,  0 ]\
+    [ 0 ,  0 ,  0 ,  0 ]\
+    [ 0 ,  0 ,  0 ,  1 ]\
+    [ 0 ,  0 ,  0 ,  0 ]
 
-B = 
-    [   0       0   ]\
-    [ 5/7*g     0   ]\
-    [   0       0   ]\
-    [   0    5/7*g  ]
+B = \
+    [   0 ,       0   ]\
+    [ 5/7*g ,     0   ]\
+    [   0 ,       0   ]\
+    [   0 ,   5/7*g  ]
 
-C = 
-    [ 1  0  0  0 ]\
-    [ 0  1  0  0 ]\
-    [ 0  0  1  0 ]\
-    [ 0  0  0  1 ]
+C = \
+    [ 1 ,  0 , 0 , 0 ]\
+    [ 0 , 1 , 0 , 0 ]\
+    [ 0 , 0 , 1 , 0 ]\
+    [ 0 , 0 , 0 , 1 ]
 
-D = 
-    [ 0  0  0  0 ]\
-    [ 0  0  0  0 ]\
-    [ 0  0  0  0 ]\
-    [ 0  0  0  0 ]
+D = \
+    [ 0 , 0 , 0 , 0 ]\
+    [ 0 , 0 , 0 , 0 ]\
+    [ 0 , 0 , 0 , 0 ]\
+    [ 0 , 0 , 0 , 0 ]
 
 Now that our A, B, C, and D matrices are defined we must find the discrete versions of each. For our application the discrete version of the C and D matrix are the same and the A and B matrix are:
 
-A<sub>d</sub> =
-    [ 1    0.02  0    0    ]\
-    [ 0    1     0    0    ]\
-    [ 0    0     1    0.02 ]\
-    [ 0    0     0    1    ]
+A<sub>d</sub> = \
+    [ 1  ,  0.02 , 0  ,  0    ]\
+    [ 0  ,  1  ,   0  ,  0    ]\
+    [ 0  ,  0   ,  1  ,  0.02 ]\
+    [ 0 ,   0  ,   0  ,  1    ]
 
-B<sub>d</sub> =
-    [   0       0   ]\
-    [ 5/7*g     0   ]\
-    [   0       0   ]\
-    [   0    5/7*g  ]
+B<sub>d</sub> = \
+    [   0   ,    0   ]\
+    [ 5/7*g  ,   0   ]\
+    [   0    ,   0   ]\
+    [   0  ,  5/7*g  ]
 
 
 **Pole Placement**
@@ -235,14 +235,14 @@ B<sub>d</sub> =
 Now that we have our state space model we can use eigenvlue pole placement in order to find our gain matrices. This was done using the python control package with our desired eigenvalues. These gain matrices were used for the simulation, but further tuning was needed for the physical system. The theoretical gain matrices were:
 
 K = \
-    [ 0.12 0.02 0 0 ]\
-    [ 0 0.12 0 0 ]\
-    [ 0 0 0.1 0.02 ]\
-    [ 0 0 0 0.1 ]
+    [ 0.12 , 0.02 , 0 , 0 ]\
+    [ 0 , 0.12 , 0 , 0 ]\
+    [ 0 , 0 , 0.1 , 0.02 ]\
+    [ 0 , 0 , 0 , 0.1 ]
 
 G =\
-    [0.3568 0.4959 0 0]\
-    [0 0 0.3568 0.4959]
+    [0.3568 , 0.4959 , 0 , 0]\
+    [0 , 0 , 0.3568 , 0.4959]
 
 The G matrix is the gain matrix which needed additional tuning. The K matrix is the observer gain matrix and did not need additional tuning.
 
@@ -254,6 +254,10 @@ We chose to use a discrete observer in order to smooth out some of the noise fro
 x̂ = A<sub>d</sub> x̂ + B<sub>d</sub> u + K (y - C x̂)
 
 Where x̂ is the approximated values for position and velocity in both the x and y axes.
+
+**Feedback Control**
+
+Now that we have our statespace model and gain matrices we can apply feedback to our system. We will accomplish this by finding the difference between our setpoint positions and velocities and the observer state. We will then multiply this difference by our G matrix to solve for u.
 
 ---
 

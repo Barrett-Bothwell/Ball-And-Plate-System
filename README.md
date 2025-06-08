@@ -92,7 +92,7 @@ This project uses a **state-space feedback controller** designed using modern co
 The first step in designing the control system is to derive the equations of motion for the Ball and Plate system. This is done using **Newton's Second Law**:
 
 \
-F = ma and M = I\alpha
+F = ma and M = Iα
 \
 
 #### Assumptions:
@@ -107,35 +107,35 @@ F = ma and M = I\alpha
    - Consider the forces acting on the ball:
      - Gravitational force \(mg\) acting downward.
      - Normal force \(N\) from the plate.
-     - Frictional force \(F_f\) preventing slipping.
+     - Frictional force \(F<sub>f</sub>\) preventing slipping.
 
 2. **Equations of Motion**:
    - For the ball in the \(x\)-direction:
      \
-     F_f - w sin(\theta) = -ma
+     F<sub>f</sub> - w sin(θ) = -ma
      \
    - For the rotation of the ball:
    \
-    F_f R = I \alpha
+    F<sub>f</sub>R = Iα
    \
 
 3. **Combine Equations**:
    - Substitute the torque equation into the force equations to eliminate \(F_f\).
    \
-    R(w sin(\theta) - ma) = I \alpha
+    R(w sin(θ) - ma) = Iα
    \
 
-4. **Final Linearized Equations**:
-   - In the \(x\)-direction:
-     \[
-     \ddot{x} = \frac{5}{7} g \theta_x
-     \]
-   - In the \(y\)-direction:
-     \[
-     \ddot{y} = \frac{5}{7} g \theta_y
-     \]
+4. **Simplify**:
+   - By plugging in the moment of inertia for a solid sphere:
+   \
+    2/5mR^2
+   \
+   - With additional algebraic simplification and a small angle approximation of sin we get:
+   \
+   a = 5/7gθ
+   \
 
-These equations describe the motion of the ball on the plate and form the basis for deriving the state-space model.
+This equation describes the behavior of the ball for both the respective x and y accelerations in terms of the plate angle θ.
 
 ---
 

@@ -124,11 +124,11 @@ F = ma and M = Iα
 4. **Simplify**:
    - By plugging in the moment of inertia for a solid sphere:
    \
-    I = 2/5mR^2
+    I = $\frac{2}{5}$mR^2
    
    - With additional algebraic simplification and a small angle approximation of sin we get:
    \
-   a = 5/7g$\theta$
+   a = $\frac{5}{7}$g$\theta$
 
 This equation describes the behavior of the ball for both the respective x and y accelerations in terms of the plate angle $\theta$.
 
@@ -158,108 +158,92 @@ For the Ball and Plate system, the states can be defined as:
 - $\dot{x}$  = Ball velocity in the x-direction
 - y = Ball position in the y-direction
 - $\dot{y}$ = Ball velocity in the y-direction
-
+\
 Thus, the **state vector \(x\)** is:
 \
 \begin{bmatrix} x \\ \dot{x} \\ y \\ \dot{y} \end{bmatrix}
-\
+
 
 2. Inputs and Outputs
 - **Inputs \( u \)**: Plate angles in the x and y directions:
-  \[
-  u = \begin{bmatrix} \theta_x \\ \theta_y \end{bmatrix}
-  \]
-- **Outputs (\( y \))**: Ball positions in the x and y directions:
-  \[
-  y = \begin{bmatrix} x_1 \\ x_3 \end{bmatrix}
-  \]
+  \
+  \begin{bmatrix} \theta_x \\ \theta_y \end{bmatrix}
+  
+- **Outputs \( y \)**: Ball positions and velocities in the x and y directions:
+  
+  \begin{bmatrix} x \\ \dot{x} \\ y \\ \dot{y} \end{bmatrix}
+  
+3. Derive the System Matrices Using the linearized equations of motion:
 
-3. Derive the State Equations
-Using the linearized equations of motion:
-\[
-a_x = \frac{5}{7} g \theta_x, \quad a_y = \frac{5}{7} g \theta_y
-\]
-We can write the second-order equations for the ball’s motion:
-\[
-\ddot{x}_1 = \frac{5}{7} g \theta_x, \quad \ddot{x}_3 = \frac{5}{7} g \theta_y
-\]
+<center>$a_x$ = $\frac{5}{7}$g $\theta_x$, a<sub>y</sub> = $\frac{5}{7}$g $\theta_y$
 
-Convert these into first-order differential equations:
-\[
-\dot{x}_1 = x_2, \quad \dot{x}_2 = \frac{5}{7} g \theta_x
-\]
-\[
-\dot{x}_3 = x_4, \quad \dot{x}_4 = \frac{5}{7} g \theta_y
-\]
+We can write the second-order equations for the ball's motion:
 
-4. Write in Matrix Form
-Combine the equations into matrix form:
-\[
-\dot{x} = \begin{bmatrix}
+$\ddot{x}$ = $\frac{5}{7}$g$\theta_x$, $\ddot{y}$ = $\frac{5}{7}$g$\theta_y$</center>
+
+>With these second order ODE equations we will now convert them into a system of first order ODEs and insert them into a matrix
+
+4. Write in Matrix Form:
+\
+$\dot{x}$ = \begin{bmatrix}
 0 & 1 & 0 & 0 \\
 0 & 0 & 0 & 0 \\
 0 & 0 & 0 & 1 \\
 0 & 0 & 0 & 0
 \end{bmatrix} x +
+
 \begin{bmatrix}
 0 & 0 \\
 \frac{5}{7} g & 0 \\
 0 & 0 \\
 0 & \frac{5}{7} g
 \end{bmatrix} u
-\]
 
-\[
+\
 y = \begin{bmatrix}
 1 & 0 & 0 & 0 \\
-0 & 0 & 1 & 0
-\end{bmatrix} x +
-\begin{bmatrix}
-0 & 0 \\
-0 & 0
-\end{bmatrix} u
-\]
-
-Here:
-- \( A \) is the system matrix.
-- \( B \) is the input matrix.
-- \( C \) is the output matrix.
-- \( D \) is the feedthrough matrix.
+0 & 1 & 0 & 0 \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1
+\end{bmatrix} x
 
 5. Final State-Space Model
 The state-space model is:
-\[
-\dot{x} = Ax + Bu
-\]
-\[
+<center>
+$\dot{x}$ = Ax + Bu \
 y = Cx + Du
-\]
+</center>
 
 Where:
-\[
+\
 A = \begin{bmatrix}
 0 & 1 & 0 & 0 \\
 0 & 0 & 0 & 0 \\
 0 & 0 & 0 & 1 \\
 0 & 0 & 0 & 0
-\end{bmatrix}, \quad
+\end{bmatrix},
+
 B = \begin{bmatrix}
 0 & 0 \\
 \frac{5}{7} g & 0 \\
 0 & 0 \\
 0 & \frac{5}{7} g
 \end{bmatrix}
-\]
-\[
+\
+\
 C = \begin{bmatrix}
 1 & 0 & 0 & 0 \\
-0 & 0 & 1 & 0
-\end{bmatrix}, \quad
-D = \begin{bmatrix}
-0 & 0 \\
-0 & 0
+0 & 1 & 0 & 0 \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1
 \end{bmatrix}
-\]
+
+D = \begin{bmatrix}
+0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0
+\end{bmatrix}
 
 ## Potential Improvements
 

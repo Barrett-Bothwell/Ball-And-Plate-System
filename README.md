@@ -6,6 +6,8 @@
 
 A dynamic balancing system that uses an **ESP32-C3 Super Mini**, **MG995 servos**, and a **resistive touchscreen** to control the position of a ball on a plate. The system implements **modern control theory** for real-time position stabilization and uses **6302view** for visualization and debugging.
 
+---
+
 ## Features
 
 - Real-time ball position control using state-space or observer-based feedback
@@ -14,6 +16,8 @@ A dynamic balancing system that uses an **ESP32-C3 Super Mini**, **MG995 servos*
 - Output actuation using MG995 servos
 - Visualization with **6302view**
 - Built on the ESP32-C3 Super Mini platform
+
+---
 
 ## Components Used
 
@@ -28,6 +32,8 @@ A dynamic balancing system that uses an **ESP32-C3 Super Mini**, **MG995 servos*
 | 4-Wire Resistive Touchscreen | Senses ball position (165mm by 100mm)  
 | 6302view               | PC-based visualization & tuning tool       |
 | 5v Power Supply           | Stable 5V source for servos and ESP32      |
+
+---
 
 ## Wiring Setup
 
@@ -46,6 +52,7 @@ A dynamic balancing system that uses an **ESP32-C3 Super Mini**, **MG995 servos*
 | Pin 3       | Touchscreen Y+ (output control)  |
 | Pin 1        | Touchscreen Y- (analog read)     |
 
+---
 
 ## Setup Instructions
 
@@ -72,6 +79,8 @@ Follow these steps to set up the Ball and Plate Control System:
    - Power on the system and ensure all components are functioning correctly.
    - Use **6302view** to monitor the ball position and adjust the control parameters as needed.
 
+---
+
 ## 6302view Integration
 
 - **Purpose**: Enables real-time monitoring and set point placement of system over serial communication.
@@ -82,6 +91,8 @@ Follow these steps to set up the Ball and Plate Control System:
   - Target/reference position slider
   - Axis Offset sliders to account for uneven surfaces
   - Circle toggle to target a circular pattern for the ball
+
+---
 
 ## Control Theory
 
@@ -130,11 +141,7 @@ F = ma and M = Iα
    \
    a = 5/7gθ
 
-This equation describes the behavior of the ball for both the respective x and y accelerations in terms of the plate angle θ.
-
----
-
-In the next step, these equations will be used to construct the state-space representation of the system.
+This equation describes the behavior of the ball for both the respective x and y accelerations in terms of the plate angle θ. These equations will now be used to construct the state-space representation of the system.
 
 **State Space Representation**
 
@@ -222,21 +229,23 @@ B<sub>d</sub> =
     [   0       0   ]\
     [   0    5/7*g  ]
 
+
 **Pole Placement**
 
 Now that we have our state space model we can use eigenvlue pole placement in order to find our gain matrices. This was done using the python control package with our desired eigenvalues. These gain matrices were used for the simulation, but further tuning was needed for the physical system. The theoretical gain matrices were:
 
-K = 
+K = \
     [ 0.12 0.02 0 0 ]\
     [ 0 0.12 0 0 ]\
     [ 0 0 0.1 0.02 ]\
     [ 0 0 0 0.1 ]
 
-G =
+G =\
     [0.3568 0.4959 0 0]\
     [0 0 0.3568 0.4959]
 
 The G matrix is the gain matrix which needed additional tuning. The K matrix is the observer gain matrix and did not need additional tuning.
+
 
 **Observer**
 
@@ -245,6 +254,8 @@ We chose to use a discrete observer in order to smooth out some of the noise fro
 x̂ = A<sub>d</sub> x̂ + B<sub>d</sub> u + K (y - C x̂)
 
 Where x̂ is the approximated values for position and velocity in both the x and y axes.
+
+---
 
 ## Potential Improvements
 

@@ -179,17 +179,17 @@ Thus, the **state vector \(x\)** is:
 3. Derive the State Equations
 Using the linearized equations of motion:
 \[
-a_x =  5/7gθₓ, a_y = 5/7gθᵧ
+a<sub>x</sub> =  5/7gθₓ, a<sub>y</sub> = 5/7gθᵧ
 \]
 We can write the second-order equations for the ball’s motion:
 \[
-\ddot{x} = 5/7gθₓ, \ddot{y} = 5/7gθᵧ
+$\dot{x}$ = 5/7gθₓ, $\dot{y}$ = 5/7gθᵧ
 \]
 
 4. Write in Matrix Form
 Combine the equations into matrix form:
 \[
-\dot{x} = \begin{bmatrix}
+$\dot{x}$ = \begin{bmatrix}
 0 & 1 & 0 & 0 \\
 0 & 0 & 0 & 0 \\
 0 & 0 & 0 & 1 \\
@@ -223,37 +223,44 @@ Here:
 5. Final State-Space Model
 The state-space model is:
 \[
-\dot{x} = Ax + Bu
+$\dot{x}$ = Ax + Bu
 \]
 \[
 y = Cx + Du
 \]
 
 Where:
-\[
-A = \begin{bmatrix}
-0 & 1 & 0 & 0 \\
-0 & 0 & 0 & 0 \\
-0 & 0 & 0 & 1 \\
-0 & 0 & 0 & 0
-\end{bmatrix}, \quad
-B = \begin{bmatrix}
-0 & 0 \\
-\frac{5}{7} g & 0 \\
-0 & 0 \\
-0 & \frac{5}{7} g
-\end{bmatrix}
-\]
-\[
-C = \begin{bmatrix}
-1 & 0 & 0 & 0 \\
-0 & 0 & 1 & 0
-\end{bmatrix}, \quad
-D = \begin{bmatrix}
-0 & 0 \\
-0 & 0
-\end{bmatrix}
-\]
+A = [ 0  1  0  0 ]
+    [ 0  0  0  0 ]
+    [ 0  0  0  1 ]
+    [ 0  0  0  0 ]
+
+B = [   0       0   ]
+    [ 5/7*g     0   ]
+    [   0       0   ]
+    [   0    5/7*g  ]
+
+C = [ 1  0  0  0 ]
+    [ 0  1  0  0 ]
+    [ 0  0  1  0 ]
+    [ 0  0  0  1 ]
+
+D = [ 0  0  0  0 ]
+    [ 0  0  0  0 ]
+    [ 0  0  0  0 ]
+    [ 0  0  0  0 ]
+
+Now that our A, B, C, and D matrices are defined we must find the discrete versions of each. For our application the discrete version of the C and D matrix are the same and the A and B matrix are:
+
+A = [ 1    0.02  0    0    ]
+    [ 0    1     0    0    ]
+    [ 0    0     1    0.02 ]
+    [ 0    0     0    1    ]
+
+B = [   0       0   ]
+    [ 5/7*g     0   ]
+    [   0       0   ]
+    [   0    5/7*g  ]
 
 ## Potential Improvements
 

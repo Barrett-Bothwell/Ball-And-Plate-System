@@ -85,165 +85,178 @@ Follow these steps to set up the Ball and Plate Control System:
 
 ## Control Theory
 
-This project uses a **state-space feedback controller** designed using modern control theory. The first step in finding our state space model was deriving the equation using Newton's Laws.
+This project uses a **state-space feedback controller** designed using modern control theory. The first step in finding our state-space model was deriving the equation using Newton's Laws.
 
 **Deriving the Equations of Motion Using Newton's Laws**:
 
 The first step in designing the control system is to derive the equations of motion for the Ball and Plate system. This is done using Newton's Second Law:
-\
-F = ma and M = Iα
+\[
+F = ma \quad \text{and} \quad M = I\alpha
+\]
 
 #### Assumptions:
 - The ball rolls without slipping on the plate.
 - The plate's motion is limited to small angular displacements (linearization assumption).
 - Constant gravitational force acts on the ball.
-- No additional rotation on ball.
-- No unwanted movement in plate.
+- No additional rotation on the ball.
+- No unwanted movement in the plate.
 
 #### Steps:
 1. **Free Body Diagram**:
    - Consider the forces acting on the ball:
-     - Gravitational force \(mg\) acting downward.
-     - Normal force \(N\) from the plate.
-     - Frictional force \(F<sub>f</sub>\) preventing slipping.
+     - Gravitational force \( mg \) acting downward.
+     - Normal force \( N \) from the plate.
+     - Frictional force \( F_f \) preventing slipping.
 
 2. **Equations of Motion**:
-   - For the ball in the x-direction:
-     \
-     F<sub>f</sub> - w sin($\theta$) = -ma
-     
+   - For the ball in the \( x \)-direction:
+     \[
+     F_f - w \sin(\theta) = -ma
+     \]
    - For the rotation of the ball:
-   \
-    F<sub>f</sub>R = I$\alpha$  
+     \[
+     F_f R = I\alpha
+     \]
 
 3. **Combine Equations**:
-   - Substitute the torque equation into the force equations to eliminate F<sub>f</sub>.
-   \
-    R(w sin($\theta$) - ma) = I$\alpha$
+   - Substitute the torque equation into the force equations to eliminate \( F_f \):
+     \[
+     R(w \sin(\theta) - ma) = I\alpha
+     \]
 
 4. **Simplify**:
    - By plugging in the moment of inertia for a solid sphere:
-   \
-    I = $\frac{2}{5}$mR^2
-   
-   - With additional algebraic simplification and a small angle approximation of sin we get:
-   \
-   a = $\frac{5}{7}$g$\theta$
+     \[
+     I = \frac{2}{5}mR^2
+     \]
+   - With additional algebraic simplification and a small angle approximation (\( \sin(\theta) \approx \theta \)), we get:
+     \[
+     a = \frac{5}{7}g\theta
+     \]
 
-This equation describes the behavior of the ball for both the respective x and y accelerations in terms of the plate angle $\theta$.
+This equation describes the behavior of the ball for both the respective \( x \)- and \( y \)-accelerations in terms of the plate angle \( \theta \).
 
 ---
 
 In the next step, these equations will be used to construct the state-space representation of the system.
 
-**State Space Representation**
+---
+
+## State-Space Representation
 
 The state-space representation of a system is given by:
-\
-$\dot{x}$ = Ax + Bu
-
+\[
+\dot{x} = Ax + Bu
+\]
+\[
 y = Cx + Du
+\]
 
 Where:
 - \( x \) is the **state vector** (e.g., ball position and velocity).
 - \( u \) is the **input vector** (e.g., plate angles).
 - \( y \) is the **output vector** (e.g., ball position).
-- \( A, B, C, D \) are the system matrices.
+- \( A, B, C, D \) are the **system matrices**.
 
-#### Steps:
+---
 
-1. Define the States
-For the Ball and Plate system, the states can be defined as:
-- x = Ball position in the x-direction \
-- $\dot{x}$  = Ball velocity in the x-direction
-- y = Ball position in the y-direction
-- $\dot{y}$ = Ball velocity in the y-direction
-\
-Thus, the **state vector \(x\)** is:
-\
-\begin{bmatrix} x \\ \dot{x} \\ y \\ \dot{y} \end{bmatrix}
+### Steps:
 
+1. **Define the States**  
+   For the Ball and Plate system, the states can be defined as:
+   - \( x = \text{Ball position in the x-direction} \)
+   - \( \dot{x} = \text{Ball velocity in the x-direction} \)
+   - \( y = \text{Ball position in the y-direction} \)
+   - \( \dot{y} = \text{Ball velocity in the y-direction} \)
 
-2. Inputs and Outputs
-- **Inputs \( u \)**: Plate angles in the x and y directions:
-  \
-  \begin{bmatrix} \theta_x \\ \theta_y \end{bmatrix}
-  
-- **Outputs \( y \)**: Ball positions and velocities in the x and y directions:
-  
-  \begin{bmatrix} x \\ \dot{x} \\ y \\ \dot{y} \end{bmatrix}
-  
-3. Derive the System Matrices Using the linearized equations of motion:
+   Thus, the **state vector \( x \)** is:
+   \[
+   x = \begin{bmatrix} x \\ \dot{x} \\ y \\ \dot{y} \end{bmatrix}
+   \]
 
-<center>$a_x$ = $\frac{5}{7}$g $\theta_x$, a<sub>y</sub> = $\frac{5}{7}$g $\theta_y$
+2. **Inputs and Outputs**  
+   - **Inputs \( u \)**: Plate angles in the \( x \)- and \( y \)-directions:
+     \[
+     u = \begin{bmatrix} \theta_x \\ \theta_y \end{bmatrix}
+     \]
+   - **Outputs \( y \)**: Ball positions in the \( x \)- and \( y \)-directions:
+     \[
+     y = \begin{bmatrix} x \\ y \end{bmatrix}
+     \]
 
-We can write the second-order equations for the ball's motion:
+3. **Derive the System Matrices**  
+   Using the linearized equations of motion:
+   \[
+   a_x = \frac{5}{7}g\theta_x, \quad a_y = \frac{5}{7}g\theta_y
+   \]
+   We can write the second-order equations for the ball's motion:
+   \[
+   \ddot{x} = \frac{5}{7}g\theta_x, \quad \ddot{y} = \frac{5}{7}g\theta_y
+   \]
 
-$\ddot{x}$ = $\frac{5}{7}$g$\theta_x$, $\ddot{y}$ = $\frac{5}{7}$g$\theta_y$</center>
+   Convert these into first-order differential equations:
+   \[
+   \dot{x} = \begin{bmatrix} \dot{x} \\ \ddot{x} \end{bmatrix}, \quad \dot{y} = \begin{bmatrix} \dot{y} \\ \ddot{y} \end{bmatrix}
+   \]
 
->With these second order ODE equations we will now convert them into a system of first order ODEs and insert them into a matrix
+4. **Write in Matrix Form**  
+   Combine the equations into matrix form:
+   \[
+   \dot{x} = \begin{bmatrix}
+   0 & 1 & 0 & 0 \\
+   0 & 0 & 0 & 0 \\
+   0 & 0 & 0 & 1 \\
+   0 & 0 & 0 & 0
+   \end{bmatrix} x +
+   \begin{bmatrix}
+   0 & 0 \\
+   \frac{5}{7}g & 0 \\
+   0 & 0 \\
+   0 & \frac{5}{7}g
+   \end{bmatrix} u
+   \]
 
-4. Write in Matrix Form:
-\
-$\dot{x}$ = \begin{bmatrix}
-0 & 1 & 0 & 0 \\
-0 & 0 & 0 & 0 \\
-0 & 0 & 0 & 1 \\
-0 & 0 & 0 & 0
-\end{bmatrix} x +
+   \[
+   y = \begin{bmatrix}
+   1 & 0 & 0 & 0 \\
+   0 & 0 & 1 & 0
+   \end{bmatrix} x
+   \]
 
-\begin{bmatrix}
-0 & 0 \\
-\frac{5}{7} g & 0 \\
-0 & 0 \\
-0 & \frac{5}{7} g
-\end{bmatrix} u
+5. **Final State-Space Model**  
+   The state-space model is:
+   \[
+   \dot{x} = Ax + Bu
+   \]
+   \[
+   y = Cx + Du
+   \]
 
-\
-y = \begin{bmatrix}
-1 & 0 & 0 & 0 \\
-0 & 1 & 0 & 0 \\
-0 & 0 & 1 & 0 \\
-0 & 0 & 0 & 1
-\end{bmatrix} x
-
-5. Final State-Space Model
-The state-space model is:
-<center>
-$\dot{x}$ = Ax + Bu \
-y = Cx + Du
-</center>
-
-Where:
-\
-A = \begin{bmatrix}
-0 & 1 & 0 & 0 \\
-0 & 0 & 0 & 0 \\
-0 & 0 & 0 & 1 \\
-0 & 0 & 0 & 0
-\end{bmatrix},
-
-B = \begin{bmatrix}
-0 & 0 \\
-\frac{5}{7} g & 0 \\
-0 & 0 \\
-0 & \frac{5}{7} g
-\end{bmatrix}
-\
-\
-C = \begin{bmatrix}
-1 & 0 & 0 & 0 \\
-0 & 1 & 0 & 0 \\
-0 & 0 & 1 & 0 \\
-0 & 0 & 0 & 1
-\end{bmatrix}
-
-D = \begin{bmatrix}
-0 & 0 & 0 & 0 \\
-0 & 0 & 0 & 0 \\
-0 & 0 & 0 & 0 \\
-0 & 0 & 0 & 0
-\end{bmatrix}
+   Where:
+   \[
+   A = \begin{bmatrix}
+   0 & 1 & 0 & 0 \\
+   0 & 0 & 0 & 0 \\
+   0 & 0 & 0 & 1 \\
+   0 & 0 & 0 & 0
+   \end{bmatrix}, \quad
+   B = \begin{bmatrix}
+   0 & 0 \\
+   \frac{5}{7}g & 0 \\
+   0 & 0 \\
+   0 & \frac{5}{7}g
+   \end{bmatrix}
+   \]
+   \[
+   C = \begin{bmatrix}
+   1 & 0 & 0 & 0 \\
+   0 & 0 & 1 & 0
+   \end{bmatrix}, \quad
+   D = \begin{bmatrix}
+   0 & 0 \\
+   0 & 0
+   \end{bmatrix}
+   \]
 
 ## Potential Improvements
 

@@ -5,6 +5,7 @@
 *Click the image above to watch a demo of the system in action!*
 
 A dynamic balancing system that uses an **ESP32-C3 Super Mini**, **MG995 servos**, and a **resistive touchscreen** to control the position of a ball on a plate. The system implements **modern control theory** for real-time position stabilization and uses **6302view** for visualization and debugging.
+By Barrett Bothwell and Kolby Kriegelstein
 
 ---
 
@@ -276,6 +277,3 @@ Now that we have our state-space model and gain matrices we can apply feedback t
   - Additional plots can be added using 6302 view
     - Currently code for angles is commented out
     - Observer state plots could be added
-
-
-    
